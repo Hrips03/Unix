@@ -12,9 +12,6 @@ int main()
 {
     pid_t pid = fork();
 
-    double side1 = 1.5;
-    double side2 = 3.5;
-
     if (pid == -1)
         perror("fork");
     else if (pid == 0)
@@ -30,7 +27,15 @@ int main()
         int status;
         wait(&status);
         // wait(NULL);
-        printf("This is a parent process, and the area of rectangle is: %g\n", calculateAreaOfRectangle(side1, side2));
+
+        double height = 0;
+        double weidth = 0;
+
+        printf("Enter a height of rectangle: ");
+        scanf("%lf", &height);
+        printf("Enter a weidth of rectangle: ");
+        scanf("%lf", &weidth);
+        printf("This is a parent process, and the area of rectangle is: %g\n", calculateAreaOfRectangle(height, weidth));
     }
 
     return 0;

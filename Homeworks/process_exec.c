@@ -7,6 +7,14 @@ double calculateAreaOfTriangle(double height, double base)
     return 0.5 * height * base;
 }
 
-int main(){
-    printf("This is a child process after exec, and the area of triangle is: %g\n", calculateAreaOfTriangle(5, 6));
+int main()
+{
+    double height = 0;
+    double base = 0;
+    printf("Enter a height of triangle: ");
+    scanf("%lf", &height);
+    printf("Enter a base of triangle: ");
+    scanf("%lf", &base);
+    printf("This is a child process after exec, and the area of triangle is: %g\n", calculateAreaOfTriangle(height, base));
+    return 0;
 }
