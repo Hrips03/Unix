@@ -33,3 +33,5 @@ void errExit(const char *format, ...) {
     fprintf(stderr, "\n");
     exit(EXIT_FAILURE);
 }
+
+void fatal(const char *msg);
