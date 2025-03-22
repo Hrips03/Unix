@@ -31,7 +31,7 @@ int main()
     {
         while (true)
         {
-            sem_wait(&shm_ptr->sem_child); // Wait for parent
+            sem_wait(&shm_ptr->sem_child); 
 
             if (strcmp(shm_ptr->message, "exit") == 0)
                 break;
@@ -41,7 +41,7 @@ int main()
             std::cout << "Child: ";
             std::cin.getline(shm_ptr->message, 256);
 
-            sem_post(&shm_ptr->sem_parent); // Signal parent
+            sem_post(&shm_ptr->sem_parent); 
 
             if (strcmp(shm_ptr->message, "exit") == 0)
                 break;
@@ -49,27 +49,25 @@ int main()
     }
     else
     {
-        sem_init(&shm_ptr->sem_parent, 1, 1); // Parent starts unlocked
-        sem_init(&shm_ptr->sem_child, 1, 0);  // Child starts locked
+        sem_init(&shm_ptr->sem_parent, 1, 1); 
+        sem_init(&shm_ptr->sem_child, 1, 0); 
 
         while (true)
         {
-            sem_wait(&shm_ptr->sem_parent); // Wait for child to read previous message
+            sem_wait(&shm_ptr->sem_parent); 
 
             std::cout << "Parent: ";
             std::cin.getline(shm_ptr->message, 256);
 
-            sem_post(&shm_ptr->sem_child); // Signal child
+            sem_post(&shm_ptr->sem_child);
 
             if (strcmp(shm_ptr->message, "exit") == 0)
                 break;
         }
-
-        sem_destroy(&shm_ptr->sem_parent);
-        sem_destroy(&shm_ptr->sem_child);
     }
 
     munmap(shm_ptr, sizeof(int));
-    shm_unlink(SHM_NAME);
+    sem_destroy(&shm_ptr->sem_parent);
+    sem_destroy(&shm_ptr->sem_child);
     return 0;
 }
