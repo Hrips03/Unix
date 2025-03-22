@@ -20,6 +20,14 @@ int main()
     {
         std::cout << "Child process's shared_var = " << *shared_var << "\n";
         *shared_var = 5;
+
+        //inchi hamara msync()-y ete meka popoxutyunnery erevum en aranc dra el
+        if (msync(shared_var, sizeof(int), MS_SYNC) == -1)
+        {
+            perror("msync");
+            return 1;
+        }
+
         std::cout << "Child process's shared_var after modification = " << *shared_var << "\n";
     }
     else
