@@ -45,6 +45,7 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "cstring": "cpp",
-        "mal": "cpp"
+        "mal": "cpp",
+        "queue": "cpp"
     }
 }
