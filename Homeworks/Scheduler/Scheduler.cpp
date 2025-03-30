@@ -8,7 +8,7 @@ void Scheduler::Schedule(const std::vector<Process> &all_processes)
     std::priority_queue<Process, std::vector<Process>, std::greater<Process>> process_queue;
 
     size_t i = 0;
-    Process *current_process = nullptr;
+    std::unique_ptr<Process> current_process = nullptr;
 
     while (i < all_processes.size() || !process_queue.empty() || current_process)
     {
@@ -28,14 +28,13 @@ void Scheduler::Schedule(const std::vector<Process> &all_processes)
             {
                 std::cout << "At time " << current_time << ": Process " << current_process->getpid() << " preempted by Process " << process_queue.top().getpid() << "\n";
                 process_queue.push(*current_process);
-                delete current_process;
                 current_process = nullptr;
             }
         }
 
         if (!current_process && !process_queue.empty())
         {
-            current_process = new Process(process_queue.top());
+            current_process = std::make_unique<Process>(process_queue.top());
             process_queue.pop();
             std::cout << "At time " << current_time << ": Process " << current_process->getpid() << " is being executed\n";
         }
@@ -49,7 +48,6 @@ void Scheduler::Schedule(const std::vector<Process> &all_processes)
             if (current_process->get_remaining_time() == 0)
             {
                 std::cout << "At time " << current_time << ": Process " << current_process->getpid() << " finished execution\n";
-                delete current_process;
                 current_process = nullptr;
             }
         }
@@ -59,4 +57,8 @@ void Scheduler::Schedule(const std::vector<Process> &all_processes)
 
         usleep(1000000);
     }
+    while (!process_queue.empty()) {
+        process_queue.pop();
+    }
+    
 }

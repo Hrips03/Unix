@@ -4,6 +4,7 @@
 #include <vector>
 #include "Process.hpp"
 #include <unistd.h>
+#include <memory>
 
 class Scheduler
 {

@@ -6,6 +6,10 @@ class Process
 {
 public:
     Process(size_t arrival, size_t burst, size_t dline, size_t id);
+    Process(const Process& other) = default;
+    Process(Process&& other) = default;
+    Process& operator=(const Process& other) = default;
+    Process& operator=(Process&& other) = default;
     bool operator>(const Process &other) const;
     size_t getpid() const;
     size_t get_arrival_time() const;
